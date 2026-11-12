@@ -1,0 +1,5 @@
+product_id,product_name,unit_of_measure,price,currency
+MAT-1001,Stainless Steel Bolt,EA,12.50,INR
+MAT-1002,Industrial Pump,EA,18500.00,INR
+MAT-1002,Industrial Pump,EA,-45,IN
+MAT-1004,Copper Wire,M,not-a-number,INR

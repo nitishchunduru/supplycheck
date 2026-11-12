@@ -1,0 +1,5 @@
+supplier_id,supplier_name,email,country
+S001,ABC Metals,procurement@abcmetals.example,India
+S002,Delta Components,orders@delta.example,India
+S002,Delta Components,not-an-email,India
+S004,,contact@vendor.example,United Arab Emirates
