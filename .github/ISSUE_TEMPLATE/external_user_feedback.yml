@@ -1,0 +1,42 @@
+name: External user feedback
+description: Share feedback after trying SupplyCheck
+title: "[Feedback]: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying SupplyCheck. Please do not include real supplier, customer, employee, financial, or confidential procurement data.
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "e.g. Python 3.12"
+    validations:
+      required: true
+  - type: input
+    id: operating_system
+    attributes:
+      label: Operating system
+      placeholder: "e.g. Windows 11, Ubuntu 24.04, macOS"
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: What did you try?
+      description: Include the command and sample type. Use fictional or anonymized data only.
+    validations:
+      required: true
+  - type: textarea
+    id: experience
+    attributes:
+      label: What worked well or was confusing?
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: What should we improve?
+    validations:
+      required: false
