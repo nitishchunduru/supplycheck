@@ -1,0 +1,5 @@
+material_id,material_description,material_type,base_unit,plant,storage_location
+MAT-1001,Carbon Steel Bolt,ROH,EA,1000,0001
+MAT-1002,Packaging Carton,VERP,EA,1000,0002
+MAT-1003,Finished Assembly,FERT,EA,2000,0001
+MAT-1004,API Ingredient,ZAPI,KG,3000,0001

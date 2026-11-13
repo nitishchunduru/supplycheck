@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
+
 from . import __version__
 from .reports import write_json, write_markdown
 from .validator import validate_csv
@@ -12,13 +13,13 @@ from .validator import validate_csv
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="supplycheck",
-        description="Validate supplier and product master-data CSV files locally.",
-        epilog="Example: python -m supplycheck validate suppliers examples/suppliers.csv",
+        description="Validate supplier, product and material master-data CSV files locally.",
+        epilog="Example: python -m supplycheck validate materials examples/materials.csv",
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    validate = subparsers.add_parser("validate", help="Validate a supplier or product CSV.")
-    validate.add_argument("record_type", choices=("suppliers", "products"))
+    validate = subparsers.add_parser("validate", help="Validate a supplier, product or material CSV.")
+    validate.add_argument("record_type", choices=("suppliers", "products", "materials"))
     validate.add_argument("input", type=Path, help="Path to the input CSV file.")
     validate.add_argument("--report-dir", type=Path, default=Path("reports"),
                           help="Directory for JSON and Markdown reports (default: reports).")

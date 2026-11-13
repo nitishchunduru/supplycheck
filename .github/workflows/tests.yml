@@ -19,4 +19,4 @@ jobs:
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
       - name: Smoke test CLI
-        run: python -m supplycheck validate suppliers examples/suppliers.csv
+        run: python -m supplycheck validate materials examples/materials.csv
