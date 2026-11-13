@@ -8,6 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
@@ -18,5 +19,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
-      - name: Smoke test CLI
+      - name: Smoke test supplier CLI
+        run: python -m supplycheck validate suppliers examples/suppliers.csv
+      - name: Smoke test product CLI
+        run: python -m supplycheck validate products examples/products.csv
+      - name: Smoke test material CLI
         run: python -m supplycheck validate materials examples/materials.csv
+      - name: Smoke test procurement CLI
+        run: python -m supplycheck validate procurement examples/info_records.csv --suppliers examples/suppliers.csv --materials examples/materials.csv
