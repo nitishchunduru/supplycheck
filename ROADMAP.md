@@ -1,82 +1,87 @@
-﻿# SupplyCheck Roadmap
+# SupplyCheck Roadmap
 
-SupplyCheck is evolving into a practical, local-first data quality toolkit for supplier, material, product, and procurement CSV files.
+SupplyCheck is a local-first Python toolkit for checking supplier, product, material and procurement CSV data. This roadmap prioritizes trustworthy community adoption before expanding the feature set.
 
-This roadmap describes planned directions. Features are not considered complete until implemented, tested, and documented.
+A roadmap item is planned work, not a claim that the feature already exists. Only released and documented behavior is considered complete.
 
-## Current Release
+## Current status
 
-### v1.3.0 — Procurement Cross-File Validation
+### Released: v1.3.0 — Procurement Cross-File Validation
 
-- Supplier and product CSV validation
-- Material master validation
-- Procurement info-record cross-file validation
-- JSON and Markdown reports
-- CLI strict-mode exit codes
-- Automated tests and Python 3.10–3.14 CI
+- Supplier, product and material CSV validation.
+- Procurement info-record checks against supplier and material identifiers.
+- JSON and Markdown reports.
+- CLI strict-mode exit codes and input/CSV edge-case handling.
+- Automated tests and CI across Python 3.10–3.14.
+- Local-first operation using the Python standard library at runtime.
 
-## Next Release
+The project is an early-stage beta. It does not connect to SAP, validate live SAP configuration, or post data into business systems.
 
-### v1.4.0 — Practical SAP MM Data Quality
+## Community growth plan
 
-**1. Stronger validation**
+### 1.4 — Community Readiness
 
-- Review validation rules against realistic SAP MM data scenarios.
-- Improve edge-case handling and error messages.
-- Evaluate additional purchasing info-record checks.
+The repository already includes the initial community foundation:
 
-**2. Better examples**
+- Contribution guide and pull-request expectations.
+- Bug-report and feature-request issue templates.
+- Pull-request template.
+- Security policy.
+- Fictional example datasets.
+- Public roadmap, changelog, MIT license and automated CI.
 
-- Add realistic, fictional supplier, material, and procurement datasets.
-- Include examples of valid and invalid records.
-- Document complete end-to-end validation workflows.
+Ongoing maintenance:
+- Keep examples, CLI documentation and supported Python versions synchronized.
+- Review incoming issues and pull requests promptly and respectfully.
+- Add focused tests for every behavior change.
+- Keep release notes and installation instructions accurate.
 
-**3. Better reports**
+### Adoption — Feedback before feature expansion
 
-- Improve report readability.
-- Make issue details easier to understand and resolve.
-- Add tests for report content and edge cases.
+This phase is not complete until real external use is evidenced.
 
-**4. Quality and compatibility**
+- Invite SAP MM learners, procurement practitioners and Python developers to try the tool with fictional or properly anonymized CSVs.
+- Ask users which checks are useful, confusing or missing.
+- Record reproducible feedback as GitHub issues.
+- Fix genuine defects and clarify limitations before adding broad new features.
+- Welcome independent contributors; review and credit substantive contributions.
+- Do not manufacture stars, downloads, testimonials, issues, contributors or usage claims.
 
-- Expand automated tests.
-- Maintain Python 3.10–3.14 compatibility.
-- Keep runtime dependencies minimal.
-- Verify all CLI commands and examples before release.
+### 1.5 — Practical improvements informed by users
 
-## Future Directions
+Potential work, subject to actual feedback:
 
-### v1.5.0 — Extended Data Quality
+- More realistic fictional datasets and end-to-end examples.
+- Clearer validation diagnostics and report usability.
+- Additional SAP MM-inspired CSV checks with explicit scope boundaries.
+- Packaging and installation improvements.
+- Compatibility and performance tests for larger CSV files.
 
-- Evaluate additional configurable validation rules.
-- Explore reusable validation profiles.
-- Improve handling of larger CSV datasets.
+### Future — Integration readiness
 
-### Future — Integration Readiness
+Evaluate only when there is a demonstrated user need:
 
-- Evaluate Excel import and export.
-- Explore structured validation configuration.
-- Assess integration options for enterprise workflows.
+- Configurable validation profiles.
+- Excel import/export.
+- Optional integrations with enterprise workflows.
 
-## Out of Scope for Current Releases
+## Out of scope
 
-- Direct SAP system connectivity.
-- Automatic SAP data posting or modification.
-- Replacement of SAP standard validation and governance.
-- Database-backed enterprise workflows.
+- Direct SAP system connectivity or automatic SAP data posting.
+- Claims of SAP certification or replacement of SAP standard controls.
+- Uploading CSV files, telemetry or remote processing by default.
+- Database-backed enterprise workflows without a clear use case.
 
-## Development Principles
+## Development principles
 
 - Local-first and privacy-conscious.
 - No unnecessary runtime dependencies.
-- Backward compatibility where practical.
+- Fictional sample data only.
 - Every new validation rule needs automated tests.
-- Sample data must be fictional.
-- Documentation must accurately describe implemented behavior.
+- Preserve backward compatibility where practical.
+- Clearly distinguish implemented behavior from proposals.
+- Never represent adoption, downloads, contributors or impact without verifiable evidence.
 
-## Release Policy
+## Release policy
 
-A roadmap item is a proposal, not a feature commitment.
-
-Each release must pass the complete test suite, CI workflow, CLI smoke tests, and documentation review before publication.
-
+A release must pass the full test suite, CI workflow, CLI smoke tests and documentation review. Package publication is a separate release action and must not be claimed until a public registry listing and install test are verified.
