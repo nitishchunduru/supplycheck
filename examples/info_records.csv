@@ -1,0 +1,5 @@
+supplier_id,material_id,plant,unit_price,currency
+S001,MAT-1001,1000,12.50,INR
+S001,MAT-1002,1000,8.75,INR
+S002,MAT-1003,2000,145.00,INR
+S004,MAT-1004,3000,980.00,INR

@@ -1,12 +1,12 @@
 # SupplyCheck
 
-**A local-first CSV data quality toolkit for supplier, product and material master data.**
+**A local-first CSV data quality toolkit for supplier, product, material and procurement data.**
 
 SupplyCheck helps procurement, operations and engineering teams catch common master-data problems before importing CSV files into business systems.
 
 - Validate supplier, product and material master CSV files.
-- Detect duplicate IDs, missing fields, malformed email addresses, invalid prices and currency codes.
-- Check basic material master fields and the plant/storage-location dependency.
+- Validate purchasing info records against supplier and material master files.
+- Detect missing fields, duplicate IDs, unknown supplier/material references, duplicate supplier-material-plant combinations, malformed email addresses, invalid prices and currency codes.
 - Generate JSON and Markdown reports.
 - Run locally with Python's standard library. No API key, database server or paid service required.
 
@@ -17,7 +17,6 @@ SupplyCheck helps procurement, operations and engineering teams catch common mas
 Requires Python 3.10 or newer.
 
 ### Windows PowerShell
-
 ```powershell
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -27,7 +26,6 @@ python -m supplycheck validate materials examples/materials.csv
 ```
 
 ### macOS / Linux
-
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -36,44 +34,41 @@ python -m supplycheck validate products examples/products.csv
 python -m supplycheck validate materials examples/materials.csv
 ```
 
-The CLI writes JSON and Markdown reports to `reports/` by default. Use `--report-dir output` to choose another directory. Use `--strict` to return exit code `1` when validation finds issues.
+## Procurement cross-file validation (1.3)
+
+Validate purchasing info records against supplier and material master files:
+
+```powershell
+python -m supplycheck validate procurement examples/info_records.csv --suppliers examples/suppliers.csv --materials examples/materials.csv
+```
+
+Required info-record columns: `supplier_id`, `material_id`, `plant`, `unit_price`, `currency`.
+
+Checks:
+- Each supplier ID exists in the supplier master.
+- Each material ID exists in the material master.
+- Supplier + material + plant combinations are unique (case-insensitive).
+- Required values are present.
+- Unit prices are non-negative numbers; currency values contain three alphabetic characters.
+
+Sample data is fictional. The checks do not verify purchasing organisation, info-record validity dates, source lists, contracts, tax, pricing conditions, SAP customizing, or supplier approval for a plant.
 
 ## CSV formats
 
-### Suppliers
+- Suppliers: `supplier_id`, `supplier_name`, `email`, `country`.
+- Products: `product_id`, `product_name`, `unit_of_measure`, `price`, `currency`.
+- Materials: `material_id`, `material_description`, `material_type`, `base_unit`; optional `plant`, `storage_location`.
 
-Required columns: `supplier_id`, `supplier_name`, `email`, `country`.
+Custom material types such as `ZAPI` are accepted. Plant/storage-location checks only verify that a plant is supplied when a storage location is populated; they do not verify SAP codes.
 
-### Products
-
-Required columns: `product_id`, `product_name`, `unit_of_measure`, `price`, `currency`.
-
-### Materials
-
-Required columns: `material_id`, `material_description`, `material_type`, `base_unit`.
-
-Optional columns: `plant`, `storage_location`. If `storage_location` is populated, `plant` must also be populated. This is a basic relationship check; SupplyCheck does not verify plant or storage-location codes against an SAP system.
-
-Custom material types such as `ZAPI` are accepted. The tool deliberately does not enforce a fixed SAP material-type catalogue because organisations configure their own types.
-
-Example:
-
-```csv
-material_id,material_description,material_type,base_unit,plant,storage_location
-MAT-1001,Carbon Steel Bolt,ROH,EA,1000,0001
-MAT-1004,API Ingredient,ZAPI,KG,3000,0001
-```
-
-All sample data is fictional. Do not upload confidential supplier or material master data to public issues.
+Reports are written to `reports/` by default. Use `--report-dir output` to choose another directory and `--strict` to return exit code `1` when issues are found.
 
 ## Run tests
-
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-## Install as a local CLI (optional)
-
+## Install as a local CLI
 ```bash
 python -m pip install -e .
 supplycheck --help
@@ -81,21 +76,18 @@ supplycheck --help
 
 ## Limitations
 
-- Email validation checks basic syntax only; it does not verify a mailbox.
+- Email validation checks syntax only; it does not verify a mailbox.
 - Currency validation checks three alphabetic characters only; it does not verify a live currency registry.
-- Country values are checked for presence, not against a country database.
-- Material checks validate required fields and the plant/storage-location dependency only. They do not validate SAP configuration, material type customizing, units of measure, plants, storage locations, valuation, or API connectivity.
-- CSV validation does not currently handle Excel workbooks, database imports, SAP APIs or vendor onboarding workflows.
-- Validation rules are intentionally small and transparent; adapt them to your organisation's policy before production use.
+- Country values are checked for presence only.
+- Material and procurement checks are basic CSV checks, not SAP integration or configuration validation.
+- Excel workbooks, database imports, SAP APIs and vendor onboarding workflows are not currently supported.
+- Adapt validation rules to your organisation's policy before production use.
 
 ## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Please include tests for new validation rules and keep sample data fictional.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Include tests for new rules and keep sample data fictional.
 
 ## Security
-
-Please see [SECURITY.md](SECURITY.md). Do not submit real supplier personal data, credentials or confidential procurement records in public issues.
+See [SECURITY.md](SECURITY.md). Do not submit real supplier personal data, credentials or confidential procurement records in public issues.
 
 ## License
-
 MIT. See [LICENSE](LICENSE).
