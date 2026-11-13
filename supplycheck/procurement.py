@@ -2,7 +2,7 @@
 from __future__ import annotations
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
-from .validator import Issue, ValidationResult, _read_csv
+from .validator import Issue, ValidationResult, _EXTRA_KEY, _read_csv
 
 INFO_REQUIRED = ("supplier_id", "material_id", "plant", "unit_price", "currency")
 
@@ -27,6 +27,13 @@ def validate_procurement(suppliers_path, materials_path, info_records_path) -> V
     seen = {}
     for row_num, row in enumerate(info_rows, start=2):
         row_issues = []
+        extras = row.get(_EXTRA_KEY)
+        if extras:
+            row_issues.append(Issue(
+                row_num, "row", "extra_columns",
+                f"Row contains {len(extras)} value(s) beyond the CSV header.",
+                ", ".join(extras)
+            ))
         supplier_id, material_id, plant = (row.get("supplier_id", ""),
                                              row.get("material_id", ""), row.get("plant", ""))
         for field, value in (("supplier_id", supplier_id), ("material_id", material_id),
